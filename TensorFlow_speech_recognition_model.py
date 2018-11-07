@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 
+
 def loadSound(path):
     soundList = listdir(path)
     loadedSound = []
@@ -11,6 +12,7 @@ def loadSound(path):
         Y, sr = librosa.load(path + sound)
         loadedSound.append(librosa.feature.mfcc(Y, sr=sr))
     return np.array(loadedSound)
+
 
 one = loadSound('./voice_123/one/')
 two = loadSound('./voice_123/two/')
@@ -28,6 +30,7 @@ y_train.shape
 X_train_placeholder = tf.placeholder(dtype=tf.float32,shape=[None, None, 87])
 y_train_placeholder = tf.placeholder(dtype=tf.float32, shape=[None, 3])
 
+
 def RNN(x, output_size, num_hidden, timesteps):
     output = tf.Variable((0, 0), trainable=False, validate_shape=False, dtype=tf.float32)
     lstm_cell = tf.nn.rnn_cell.LSTMCell(num_hidden, activation="tanh")
@@ -35,6 +38,7 @@ def RNN(x, output_size, num_hidden, timesteps):
     for batch in range(timesteps):
         output, state = lstm_cell(x[batch], state)
     return output
+
 
 nn = RNN(X_train_placeholder, 27, 256, 20)
 nn = tf.layers.dense(nn, 128, activation='relu')

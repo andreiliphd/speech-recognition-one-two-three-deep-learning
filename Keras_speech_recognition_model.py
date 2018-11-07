@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
 
+
 def loadSound(path):
     soundList = listdir(path)
     loadedSound = []
@@ -12,6 +13,7 @@ def loadSound(path):
         Y, sr = librosa.load(path + sound)
         loadedSound.append(librosa.feature.mfcc(Y, sr=sr))
     return np.array(loadedSound)
+
 
 one = loadSound('./voice_123/one/')
 one = loadSound('./voice_123/one/')
